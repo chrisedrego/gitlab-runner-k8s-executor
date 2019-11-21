@@ -1,13 +1,36 @@
 # Instructions
 
-- Having Kubernetes Cluster setup
-- Having Helm Configured an setup
+## Pre-Requisites:
+- A Running Kubernetes Cluster
+- Helm CLI Tool & Kubernetes Tool
+- Helm configured with Tiller
+
+
+
+- Installation of Helm on mac-os using brew:
+```
+    brew install kubernetes-helm
+```
+
+- Installation of Kubectl on mac-os using brew:
+```
+    brew install kubectl
+
+    brew install kubernetes-cli
+```
+
+## Steps:
 
 - Creating a separate namespace for the Gitlab-runner
-    > kubectl create namespace gitlab-runner
-- Creating a Role for the Gitlab-runner namespaces with all the required permission for the namespace
-- Creating a RoleBinding to bind the Gitlab-runner Role to the Service Account for the Gitlab-runner
+```
+    kubectl create namespace gitlab-runner
+```
+- Creating a Role/Role-Binding sfor the Gitlab-runner namespaces with all the required permission for the namespace
+```
+    kubectl apply -f role/gitlab-ci-role.yaml
 
+    kubectl apply -f role/gitlab-runner-role-binding.yaml
 
-> helm init
-> helm install --namespace gitlab-runner --name gitlab-runner -f values.yaml gitlab/gitlab-runner
+    kubectl apply -f role/gitlab-runner-service-account.yaml
+```
+
