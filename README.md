@@ -23,7 +23,13 @@ Gitlab-CI Runner setup on Kubernetes (Kubernetes Executor)
     brew install kubernetes-cli
 ```
 
-## Steps:
+- Installation of Kubernetes on Windows using choco Package Manager
+```
+    choco install kubernetes-helm
+```
+
+
+## Creating Service Account, Namespace, Role & Role Binding:
 
 - Creating a separate namespace for the Gitlab-runner
 ```
@@ -37,4 +43,26 @@ Gitlab-CI Runner setup on Kubernetes (Kubernetes Executor)
 
     kubectl apply -f role/gitlab-runner-service-account.yaml
 ```
+
+
+## Configure Helm
+
+- Create tiller Service Account
+
+```
+    kubectl -n kube-system create serviceaccount tiller
+```
+
+- Create ClusterRolebinding 
+```
+    kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+```
+
+- Intialize Helm
+```
+    helm init --service-account tiller
+```
+
+
+- You have non of the pre-requiste software installed on the your machine you can run the bash script under the script folder which will automatically install all the required software.
 
